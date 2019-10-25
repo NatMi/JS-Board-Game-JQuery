@@ -48,6 +48,7 @@ class Player {
           isOnMap++;
         }
         this.position = $(`.${this.cssClass}`)[0];
+        this.position = $(`.${this.cssClass}`)[0]; //jQuery: selecting first element of this.cssClass (i.e. playerOne/ playerTwo) HTML collection.
       }
     };
     this.positionArray = () => {
@@ -299,6 +300,7 @@ let movementManager = {
 
 //////////////////////////   CLICK EVENTS delegation /////////////////////////////////////////
 $("body").on("click", () => {
+  // JQuery: selecting element to which .on() event handling method is attached.
   if (event.target.id == "newGameBtn") {
     game.newGame();
   } else if (event.target.classList.contains("availableSquare")) {
