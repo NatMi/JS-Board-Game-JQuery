@@ -317,9 +317,8 @@ let movementManager = {
   }
 };
 
-//////////////////////////   CLICK EVENTS   /////////////////////////////////////////
-const body = document.querySelector("body");
-body.addEventListener("click", event => {
+//////////////////////////   CLICK EVENTS delegation /////////////////////////////////////////
+$("body").on("click", () => {
   if (event.target.id == "newGameBtn") {
     game.newGame();
   } else if (event.target.classList.contains("availableSquare")) {
