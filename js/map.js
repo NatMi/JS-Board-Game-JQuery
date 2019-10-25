@@ -38,10 +38,9 @@ class Player {
     this.healthPoints = 100;
     this.Weapon = weapons.default();
     this.defenceMultiplier = 1;
-    this.generatePosition = collectionName => {
+    this.generatePosition = mapSquareCollectionName => {
       let isOnMap = 0;
       while (isOnMap < 1) {
-        let newPlayer = map.randomPosition(collectionName);
         let newPlayer = map.randomPosition(mapSquareCollectionName);
         if (newPlayer.className === "mapSquare") {
           newPlayer.classList.add(this.cssClass);
