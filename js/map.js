@@ -46,7 +46,6 @@ class Player {
           newPlayer.classList.add(this.cssClass);
           isOnMap++;
         }
-        this.position = $(`.${this.cssClass}`)[0];
         this.position = $(`.${this.cssClass}`)[0]; //jQuery: selecting first element of this.cssClass (i.e. playerOne/ playerTwo) HTML collection.
       }
     };
