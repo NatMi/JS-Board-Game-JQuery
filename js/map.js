@@ -42,6 +42,7 @@ class Player {
       let isOnMap = 0;
       while (isOnMap < 1) {
         let newPlayer = map.randomPosition(collectionName);
+        let newPlayer = map.randomPosition(mapSquareCollectionName);
         if (newPlayer.className === "mapSquare") {
           newPlayer.classList.add(this.cssClass);
           isOnMap++;
@@ -78,35 +79,14 @@ class Player {
     };
 
     this.createStatbox = () => {
-      document.getElementById(`${this.statboxId}`).innerHTML = "";
-      let paragraphHealth = document.createElement("p");
-      let health = document.createTextNode(`HEALTH: ${this.healthPoints}`);
-      paragraphHealth.appendChild(health);
-      document.getElementById(`${this.statboxId}`).appendChild(paragraphHealth);
-
-      let paragraphWeapon = document.createElement("p");
-      let weapon = document.createTextNode(`WEAPON: ${this.Weapon.name}`);
-      let weaponIcon = document.createElement("div");
-      weaponIcon.classList.add(`${this.Weapon.cssClass}`);
-      weaponIcon.classList.add("weaponIcon");
-      paragraphWeapon.appendChild(weapon);
-      paragraphWeapon.appendChild(weaponIcon);
-      document.getElementById(`${this.statboxId}`).appendChild(paragraphWeapon);
-
-      let paragraphDamage = document.createElement("p");
-      let damage = document.createTextNode(`DAMAGE: ${this.Weapon.damage}`);
-
-      paragraphDamage.appendChild(damage);
-      document.getElementById(`${this.statboxId}`).appendChild(paragraphDamage);
-
-      /* Code below adds info about current player's positions to the statbox*/
-      // let paragraphPosition = document.createElement("p");
-      // let position = document.createTextNode(`POSITION: ${this.position.id}`);
-
-      // paragraphPosition.appendChild(position);
-      // document
-      //   .getElementById(`${this.statboxId}`)
-      //   .appendChild(paragraphPosition);
+      let playerStatbox = $(`#${this.statboxId}`); // jQuery: selecting element with player's statbox id
+      playerStatbox.html(""); // jQuery: using html() method to change elements's innerHTML
+      playerStatbox.append($("<p></p>").text(`HEALTH: ${this.healthPoints}`)); // jQuery: appending new p with text content to selected elment
+      playerStatbox.append($("<p></p>").text(`WEAPON: ${this.Weapon.name}`));
+      playerStatbox.append(
+        $("<div></div>").addClass(`weaponIcon ${this.Weapon.cssClass}`)
+      ); // jQuery: appending new div and adding classes to it
+      playerStatbox.append($("<p></p>").text(`DAMAGE: ${this.Weapon.damage}`));
     };
   }
 }
