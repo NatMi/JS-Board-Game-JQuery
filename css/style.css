@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:700&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+body {
+  background-image: url(../assets/background.jpg);
+  background-size: cover;
+}
+.btnBox {
+  display: none;
+}
+#newGameBtn {
+  display: inline-block;
+  padding: 1em;
+  margin: 0px auto 20px auto;
+  border: none;
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #27819a;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+#newGameBtn:hover {
+  background-color: #4095c6;
+}
+.attackBtn {
+  display: inline-block;
+  padding: 1em;
+  margin: 20px auto;
+  border: none;
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #bc3e31;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.attackBtn:hover {
+  background-color: #d15e52;
+}
+.defendBtn {
+  display: inline-block;
+  padding: 1em;
+  margin: 20px auto;
+  border: none;
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #40806a;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.defendBtn:hover {
+  background-color: #649c89;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+#main-container {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#contentWrap {
+  padding-bottom: 2.5rem;
+}
+#game-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#main-header {
+  margin: 1rem 0rem;
+  font-family: "Cinzel Decorative";
+  text-align: center;
+}
+#main-header h1 {
+  font-size: 2rem;
+  color: rgb(42, 84, 133);
+}
+#main-header p {
+  color: rgb(26, 60, 99);
+}
+.stats-window {
+  text-align: center;
+  background-color: #eefbff;
+  box-shadow: rgba(42, 85, 133, 0.466) 5px 7px 15px;
+  height: 250px;
+  overflow: initial;
+  width: auto;
+  padding: 1rem;
+  border: 6px outset rgba(28, 110, 164, 0.48);
+  border-radius: 4px;
+  display: none;
+}
+.stats-window p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.stats-window h1 {
+  margin-bottom: 20px;
+}
+.stats-window p .weaponIcon {
+  margin-left: 40%;
+}
+#mapGrid {
+  display: none;
+  align-content: center;
+  border: 6px outset rgba(28, 110, 164, 0.349);
+  border-radius: 6px;
+}
+
+/*map*/
+.mapGridRow {
+  align-content: center;
+  justify-content: center;
+  margin: auto;
+  display: flex;
+  flex: 1 100%;
+  flex-direction: row;
+}
+
+.mapSquare {
+  height: 45px;
+  width: 45px;
+  background-color: #eefbff;
+  border: solid 1px rgb(67, 158, 163);
+}
+
+.availableSquare {
+  box-shadow: inset 0 0 10px #007e47;
+}
+
+.dimmedSquare {
+  background-image: url(../assets/dimmed.jpg);
+  background-size: cover;
+  opacity: 80%;
+}
+
+/*players*/
+.playerOne {
+  background-image: url(../assets/player1.jpg) !important;
+  background-size: cover !important;
+}
+
+.playerTwo {
+  background-image: url(../assets/player2.jpg) !important;
+  background-size: cover !important;
+}
+
+/*weapons*/
+
+.weaponIcon {
+  height: 45px;
+  width: 45px;
+  text-align: center;
+}
+
+.snowball {
+  background-image: url(../assets/snowball.png);
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.fish {
+  background-image: url(../assets/fish.png);
+  background-size: 85%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.smallStone {
+  background-image: url(../assets/stone-0.png);
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.bigStone {
+  background-image: url(../assets/stone-0.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Arimo", sans-serif;
+  color: #bbd4d4;
+  text-align: center;
+  justify-content: space-evenly;
+  background-color: #2d555f;
+  padding: 2rem;
+}
+footer a {
+  text-decoration: none;
+  color: #86cbcc;
+  transition: all 0.2s;
+}
+footer a:hover {
+  text-decoration: none;
+  color: #689d9e;
+}
+
+tr {
+  text-align: left;
+}
+th {
+  text-align: center;
+  border-bottom: solid 1px #69a598;
+}
+#gameInfo {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Arimo", sans-serif;
+  color: #42739d;
+  text-align: center;
+  justify-content: space-evenly;
+  background-color: rgba(234, 251, 252, 0.774);
+  margin-top: 2rem;
+  padding: 2rem;
+  border-bottom: 6px outset rgba(28, 110, 164, 0.48);
+  box-shadow: rgba(42, 85, 133, 0.466) 5px 7px 15px;
+}
