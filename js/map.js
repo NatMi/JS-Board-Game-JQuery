@@ -46,7 +46,7 @@ class Player {
           newPlayer.classList.add(this.cssClass);
           isOnMap++;
         }
-        this.position = document.getElementsByClassName(this.cssClass)[0];
+        this.position = $(`.${this.cssClass}`)[0];
       }
     };
     this.positionArray = () => {
