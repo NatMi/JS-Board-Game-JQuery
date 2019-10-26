@@ -18,7 +18,7 @@ let weapons = {
     for (let weapon of weapons.pickable()) {
       let isOnMap = 0;
       while (isOnMap < 2) {
-        let newWeapon = map.randomPosition(map.allSquares);
+        let newWeapon = map.randomPosition(map.allSquares());
         if (newWeapon.className === "mapSquare") {
           newWeapon.classList.add(weapon.cssClass);
           isOnMap++;
@@ -91,8 +91,9 @@ class Player {
 }
 /////////////////////////////    MAP   /////////////////////////////////////
 let map = {
-  container: document.getElementById("map-container"),
-  allSquares: document.getElementsByClassName("mapSquare"),
+  allSquares: () => {
+    return $(".mapSquare");
+  }, // checking HTML collection od mapSquare class elements
   firstRow: () => {
     return mapGrid.firstChild.getElementsByClassName("mapSquare");
   },
@@ -106,7 +107,7 @@ let map = {
   generateDimmedSquares: () => {
     let totalDimmed = 0;
     while (totalDimmed < 15) {
-      let newDimmedSquare = map.randomPosition(map.allSquares);
+      let newDimmedSquare = map.randomPosition(map.allSquares());
 
       if (newDimmedSquare.className === "mapSquare") {
         newDimmedSquare.classList.add("dimmedSquare");
