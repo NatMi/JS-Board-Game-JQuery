@@ -93,12 +93,13 @@ class Player {
 let map = {
   allSquares: () => {
     return $(".mapSquare");
-  }, // checking HTML collection od mapSquare class elements
+  }, // JQuery: checking HTML collection od mapSquare class elements
+
   firstRow: () => {
-    return mapGrid.firstChild.getElementsByClassName("mapSquare");
+    return $("#mapGrid .mapGridRow:first .mapSquare"); //JQuery: selecting element, and inner elements of its first and last child
   },
   lastRow: () => {
-    return mapGrid.lastChild.getElementsByClassName("mapSquare");
+    return $("#mapGrid .mapGridRow:last .mapSquare");
   },
   randomPosition: collectionName => {
     let randomIndex = Math.floor(Math.random() * collectionName.length);
