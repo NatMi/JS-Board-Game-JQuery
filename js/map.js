@@ -139,7 +139,7 @@ let game = {
     $("#mapGrid")
       .html("")
       .removeClass("disabled")
-      .fadeIn(900); // JQuery: changing css property value (display "block", if previously was "none"), clearing mapGrid and removing pointer events blockade from previous game
+      .fadeIn(900); // JQuery: using fadeIn() and fadeOut() effects, clearing mapGrid and removing pointer events blockade from previous game
     $(".btnBox").css("display", "none"); //hides fightMode button elements
     map.drawMapGrid(12);
     $(".stats-window").css("display", "block"); // sets statbox display to block ("none" before the game starts)
@@ -157,6 +157,7 @@ let game = {
   fightMode: () => {
     $("#mapGrid").addClass("disabled");
     game.btnBox().style.display = "block";
+    movementManager.clearAccessible();
   },
 
   activePlayer: () => {
