@@ -63,7 +63,6 @@ class Player {
       if (game.inactivePlayer().healthPoints > 0) {
         game.inactivePlayer().createStatbox();
         game.toggleBtnBox();
-        game.toggleIsActive();
       } else if (game.inactivePlayer().healthPoints <= 0) {
         game.inactivePlayer().healthPoints = 0;
         game.inactivePlayer().createStatbox();
@@ -74,7 +73,6 @@ class Player {
     this.defend = () => {
       this.defenceMultiplier = 0.5;
       game.toggleBtnBox();
-      game.toggleIsActive();
     };
 
     this.createStatbox = () => {
@@ -96,7 +94,7 @@ let map = {
   }, // JQuery: checking HTML collection od mapSquare class elements
 
   firstRow: () => {
-    return $("#mapGrid .mapGridRow:first .mapSquare"); //JQuery: selecting element, and inner elements of its first and last child
+    return $("#mapGrid .mapGridRow:first .mapSquare"); //JQuery: selecting element, then inner elements of its first and last child
   },
   lastRow: () => {
     return $("#mapGrid .mapGridRow:last .mapSquare");
@@ -118,15 +116,15 @@ let map = {
   },
   drawMapGrid: size => {
     for (let row = 0; row < size; row++) {
-      let mapGridRow = document.createElement("div");
-      mapGridRow.className = "mapGridRow";
-      mapGrid.appendChild(mapGridRow);
+      $("#mapGrid").append($("<div></div").addClass("mapGridRow"));
 
       for (let column = 0; column < size; column++) {
-        let mapSquare = document.createElement("div");
-        mapSquare.className = "mapSquare";
-        mapSquare.id = `${[row + 1]}-${[column + 1]}`;
-        mapGridRow.appendChild(mapSquare);
+        // JQuery: 1. Create div object,add mapSquareClass and id attribute (coordinates)
+        let mapSquare = $("<div></div>")
+          .addClass("mapSquare")
+          .attr("id", `${[row]}-${[column + 1]}`);
+
+        $(".mapGridRow:last").append(mapSquare);
       }
     }
   }
@@ -139,25 +137,24 @@ let game = {
   newGame: () => {
     game.playerOne = new Player("playerOne", "statboxOne");
     game.playerTwo = new Player("playerTwo", "statboxTwo");
-    mapGrid.innerHTML = "";
-    mapGrid.classList.remove("disabled");
+    $("#mapGrid")
+      .html("")
+      .removeClass("disabled")
+      .css("display", "block"); // JQuery: changing css property value (display "block", if previously was "none"), clearing mapGrid and removing pointer events blockade from previous game
+    $(".btnBox").css("display", "none"); //hides fightMode button elements
     map.drawMapGrid(12);
-    document.getElementById("mapGrid").style.display = "block";
-    document.getElementsByClassName("stats-window")[0].style.display = "block";
-    document.getElementsByClassName("stats-window")[1].style.display = "block";
+    $(".stats-window").css("display", "block"); // sets statbox display to block ("none" before the game starts)
     map.generateDimmedSquares();
     game.playerOne.generatePosition(map.firstRow());
     game.playerTwo.generatePosition(map.lastRow());
     game.playerOne.isActive = true;
     movementManager.checkAvailableSquares(game.activePlayer());
     weapons.generateOnMap();
-    document.getElementsByClassName("btnBox")[0].style.display = "none";
-    document.getElementsByClassName("btnBox")[1].style.display = "none";
     game.playerOne.createStatbox();
     game.playerTwo.createStatbox();
   },
   fightMode: () => {
-    mapGrid.classList.add("disabled");
+    $("#mapGrid").addClass("disabled");
     game.btnBox().style.display = "block";
   },
 
@@ -179,38 +176,28 @@ let game = {
     if (game.activePlayer() == game.playerOne) {
       game.playerOne.isActive = false;
       game.playerTwo.isActive = true;
-    } else if (game.activePlayer() == game.playerTwo) {
+    } else {
       game.playerTwo.isActive = false;
       game.playerOne.isActive = true;
     }
   },
   availableSquares: () => {
-    let availables = document.getElementsByClassName("availableSquare");
-    return availables;
+    return $(".availableSquare");
   },
 
   btnBox: () => {
     let btn = "";
     if (game.activePlayer() == game.playerOne) {
-      btn = document.getElementsByClassName("btnBox")[0];
-    } else if (game.activePlayer() == game.playerTwo) {
-      btn = document.getElementsByClassName("btnBox")[1];
+      btn = $(".btnBox").get(0);
+    } else {
+      btn = $(".btnBox").get(1);
     }
     return btn;
   },
   toggleBtnBox: () => {
-    let btn = "";
-    if (game.activePlayer() == game.playerOne) {
-      btn = document.getElementsByClassName("btnBox")[0];
-      btn.style.display = "none";
-      btn = document.getElementsByClassName("btnBox")[1];
-      btn.style.display = "block";
-    } else if (game.activePlayer() == game.playerTwo) {
-      btn = document.getElementsByClassName("btnBox")[1];
-      btn.style.display = "none";
-      btn = document.getElementsByClassName("btnBox")[0];
-      btn.style.display = "block";
-    }
+    game.btnBox().style.display = "none";
+    game.toggleIsActive();
+    game.btnBox().style.display = "block";
   }
 };
 
@@ -229,26 +216,25 @@ let movementManager = {
         }
 
         let newCheck = `${x}-${y}`;
-        let newCheckId = document.getElementById(`${newCheck}`);
+        let newCheckId = $(`#${newCheck}`);
 
         if (newCheckId == null) {
           break;
         } else if (
           i == 0 &&
-          (newCheckId.classList.contains("playerOne") ||
-            newCheckId.classList.contains("playerTwo"))
+          (newCheckId.hasClass("playerOne") || newCheckId.hasClass("playerTwo"))
         ) {
           game.fightMode();
           break;
         } else if (
-          newCheckId.classList.contains("playerOne") ||
-          newCheckId.classList.contains("playerTwo")
+          newCheckId.hasClass("playerOne") ||
+          newCheckId.hasClass("playerTwo")
         ) {
           break;
-        } else if (newCheckId.classList.contains("dimmedSquare")) {
+        } else if (newCheckId.hasClass("dimmedSquare")) {
           break;
         } else {
-          newCheckId.classList.add("availableSquare");
+          newCheckId.addClass("availableSquare");
         }
       }
     }
@@ -259,9 +245,7 @@ let movementManager = {
     check(player, 1, 1); //right
   },
   takePlayerAway: player => {
-    document
-      .getElementById(player.position.id)
-      .classList.remove(player.cssClass);
+    $(`#${player.position.id}`).removeClass(`${player.cssClass}`);
   },
   clearAccessible: () => {
     while (game.availableSquares().length) {
@@ -275,8 +259,7 @@ let movementManager = {
   movePlayer: player => {
     movementManager.clearAccessible();
     movementManager.takePlayerAway(player);
-
-    let chosenSquare = document.getElementById(event.target.id);
+    let chosenSquare = event.target;
     chosenSquare.classList.add(player.cssClass);
     player.position = chosenSquare;
     // check if chosen square contains weapon
