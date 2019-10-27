@@ -135,15 +135,16 @@ let game = {
   playerTwo: "",
 
   newGame: () => {
-    game.playerOne = new Player("playerOne", "statboxOne");
-    game.playerTwo = new Player("playerTwo", "statboxTwo");
+    $("#mapGrid").fadeOut(10);
     $("#mapGrid")
       .html("")
       .removeClass("disabled")
-      .css("display", "block"); // JQuery: changing css property value (display "block", if previously was "none"), clearing mapGrid and removing pointer events blockade from previous game
+      .fadeIn(900); // JQuery: changing css property value (display "block", if previously was "none"), clearing mapGrid and removing pointer events blockade from previous game
     $(".btnBox").css("display", "none"); //hides fightMode button elements
     map.drawMapGrid(12);
     $(".stats-window").css("display", "block"); // sets statbox display to block ("none" before the game starts)
+    game.playerOne = new Player("playerOne", "statboxOne");
+    game.playerTwo = new Player("playerTwo", "statboxTwo");
     map.generateDimmedSquares();
     game.playerOne.generatePosition(map.firstRow());
     game.playerTwo.generatePosition(map.lastRow());
