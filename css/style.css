@@ -14,6 +14,7 @@
 body {
   background-image: url(../assets/background.jpg);
   background-size: cover;
+  background-attachment: fixed;
 }
 .btnBox {
   display: none;
@@ -256,6 +257,6 @@ th,
   background-color: rgba(234, 251, 252, 0.774);
   margin-top: 2rem;
   padding: 2rem;
-  border-bottom: 6px outset rgba(28, 110, 164, 0.48);
+  border-top: 6px outset rgba(28, 110, 164, 0.48);
   box-shadow: rgba(42, 85, 133, 0.466) 5px 7px 15px;
 }
