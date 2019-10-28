@@ -43,7 +43,7 @@ class Player {
           newPlayer.classList.add(this.cssClass);
           isOnMap++;
         }
-        this.position = $(`.${this.cssClass}`)[0]; //jQuery: selecting first element of this.cssClass (i.e. playerOne/ playerTwo) HTML collection.
+        this.position = $(`.${this.cssClass}`)[0]; //jQuery: selecting first element within jQuery wrapper of this.cssClass (i.e. playerOne/ playerTwo) HTML collection.
         // Setting this element as player's position
       }
     };
@@ -281,11 +281,11 @@ let movementManager = {
     for (let i = 0; i < game.weapons.allItems.length; i++) {
       if (chosenSquare.hasClass(`${game.weapons.allItems[i].cssClass}`)) {
         console.log(`grabbed ${game.weapons.allItems[i].cssClass}`);
-        chosenSquare.classList.add(`${player.Weapon.cssClass}`);
+        chosenSquare.addClass(`${player.Weapon.cssClass}`);
         player.Weapon = game.weapons.allItems.find(item => {
           return item.cssClass == game.weapons.allItems[i].cssClass;
         });
-        chosenSquare.classList.remove(`${game.weapons.allItems[i].cssClass}`);
+        chosenSquare.removeClass(`${game.weapons.allItems[i].cssClass}`);
         i = game.weapons.allItems.length;
       }
     }
@@ -299,13 +299,14 @@ let movementManager = {
 //////////////////////////   CLICK EVENTS delegation /////////////////////////////////////////
 $("body").on("click", () => {
   // JQuery: selecting element to which .on() event handling method is attached.
-  if (event.target.id == "newGameBtn") {
+  if ($(event.target).attr("id") == "newGameBtn") {
     game.newGame();
-  } else if (event.target.classList.contains("availableSquare")) {
+  } else if ($(event.target).hasClass("availableSquare")) {
     movementManager.movePlayer(game.activePlayer());
-  } else if (event.target.classList.contains("attackBtn")) {
+  } else if ($(event.target).hasClass("attackBtn")) {
     game.activePlayer().attack();
-  } else if (event.target.classList.contains("defendBtn")) {
+  } else if ($(event.target).hasClass("defendBtn")) {
     game.activePlayer().defend();
   }
+  console.log("click");
 });
