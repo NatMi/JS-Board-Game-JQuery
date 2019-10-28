@@ -80,7 +80,7 @@ body {
   font-family: "Arimo", sans-serif;
   color: #5e8cb3;
   position: relative;
-  min-height: 50vh;
+  min-height: 45vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
