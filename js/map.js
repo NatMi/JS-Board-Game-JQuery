@@ -273,14 +273,13 @@ let movementManager = {
   movePlayer: player => {
     movementManager.clearAccessible();
     movementManager.takePlayerAway(player);
-    let chosenSquare = event.target;
-    chosenSquare.classList.add(player.cssClass);
-    player.position = chosenSquare;
-    // check if chosen square contains weapon
+    let chosenSquare = $(event.target); // returns event target element in jQuery object wrapper
+    chosenSquare.addClass(player.cssClass);
+    player.position = chosenSquare[0]; // accesing html element within jQuery wrapper
+
+    // check if target mapSquare contains weapon
     for (let i = 0; i < game.weapons.allItems.length; i++) {
-      if (
-        chosenSquare.classList.contains(`${game.weapons.allItems[i].cssClass}`)
-      ) {
+      if (chosenSquare.hasClass(`${game.weapons.allItems[i].cssClass}`)) {
         console.log(`grabbed ${game.weapons.allItems[i].cssClass}`);
         chosenSquare.classList.add(`${player.Weapon.cssClass}`);
         player.Weapon = game.weapons.allItems.find(item => {
