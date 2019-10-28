@@ -1,32 +1,29 @@
-//////////////////////   WEAPONS   /////////////////////////////////////
-let weapons = {
-  allItems: [
-    { name: "Snowball", cssClass: "snowball", damage: 10 },
-    { name: "Fish", cssClass: "fish", damage: 15 },
-    { name: "Small stone", cssClass: "smallStone", damage: 20 },
-    { name: "Big stone", cssClass: "bigStone", damage: 30 }
-  ],
-  pickable: () => {
-    return weapons.allItems.filter(item => {
-      return item.damage > 10;
-    });
-  },
-  default: () => {
-    return weapons.allItems[0];
-  },
-  generateOnMap: () => {
-    for (let weapon of weapons.pickable()) {
-      let isOnMap = 0;
-      while (isOnMap < 2) {
-        let newWeapon = map.randomPosition(map.allSquares());
-        if (newWeapon.className === "mapSquare") {
-          newWeapon.classList.add(weapon.cssClass);
-          isOnMap++;
+//////////////////////   WEAPONS   ///////////////
+class Weapons {
+  constructor(allItems) {
+    this.allItems = allItems;
+    this.pickable = () => {
+      return this.allItems.filter(item => {
+        return item.damage > 10;
+      });
+    };
+    this.default = () => {
+      return this.allItems[0];
+    };
+    this.generateOnMap = () => {
+      for (let weapon of this.pickable()) {
+        let isOnMap = 0;
+        while (isOnMap < 2) {
+          let newWeapon = map.randomPosition(map.allSquares());
+          if (newWeapon.className === "mapSquare") {
+            newWeapon.classList.add(weapon.cssClass);
+            isOnMap++;
+          }
         }
       }
-    }
+    };
   }
-};
+}
 
 //////////////////////////   PLAYER   /////////////////////////////////
 class Player {
@@ -36,7 +33,7 @@ class Player {
     this.isActive = false;
     this.position = null;
     this.healthPoints = 100;
-    this.Weapon = weapons.default();
+    this.Weapon = game.weapons.default();
     this.defenceMultiplier = 1;
     this.generatePosition = mapSquareCollectionName => {
       let isOnMap = 0;
@@ -150,7 +147,7 @@ let game = {
     game.playerTwo.generatePosition(map.lastRow());
     game.playerOne.isActive = true;
     movementManager.checkAvailableSquares(game.activePlayer());
-    weapons.generateOnMap();
+    game.weapons.generateOnMap();
     game.playerOne.createStatbox();
     game.playerTwo.createStatbox();
   },
@@ -265,15 +262,17 @@ let movementManager = {
     chosenSquare.classList.add(player.cssClass);
     player.position = chosenSquare;
     // check if chosen square contains weapon
-    for (let i = 0; i < weapons.allItems.length; i++) {
-      if (chosenSquare.classList.contains(`${weapons.allItems[i].cssClass}`)) {
-        console.log(`grabbed ${weapons.allItems[i].cssClass}`);
+    for (let i = 0; i < game.weapons.allItems.length; i++) {
+      if (
+        chosenSquare.classList.contains(`${game.weapons.allItems[i].cssClass}`)
+      ) {
+        console.log(`grabbed ${game.weapons.allItems[i].cssClass}`);
         chosenSquare.classList.add(`${player.Weapon.cssClass}`);
-        player.Weapon = weapons.allItems.find(item => {
-          return item.cssClass == weapons.allItems[i].cssClass;
+        player.Weapon = game.weapons.allItems.find(item => {
+          return item.cssClass == game.weapons.allItems[i].cssClass;
         });
-        chosenSquare.classList.remove(`${weapons.allItems[i].cssClass}`);
-        i = weapons.allItems.length;
+        chosenSquare.classList.remove(`${game.weapons.allItems[i].cssClass}`);
+        i = game.weapons.allItems.length;
       }
     }
 
