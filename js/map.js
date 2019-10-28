@@ -38,16 +38,17 @@ class Player {
     this.generatePosition = mapSquareCollectionName => {
       let isOnMap = 0;
       while (isOnMap < 1) {
-        let newPlayer = map.randomPosition(mapSquareCollectionName);
+        let newPlayer = map.randomPosition(mapSquareCollectionName); // generate new random position from selected collection of elements and check if it is available:
         if (newPlayer.className === "mapSquare") {
           newPlayer.classList.add(this.cssClass);
           isOnMap++;
         }
         this.position = $(`.${this.cssClass}`)[0]; //jQuery: selecting first element of this.cssClass (i.e. playerOne/ playerTwo) HTML collection.
+        // Setting this element as player's position
       }
     };
     this.positionArray = () => {
-      let currentId = this.position.id.split("-");
+      let currentId = this.position.id.split("-"); // element's id is a string by default. For navigation purpose, this function turns it into array of coordinate numbers
       currentId[0] = parseInt(currentId[0]);
       currentId[1] = parseInt(currentId[1]);
       return currentId;
@@ -221,7 +222,7 @@ let movementManager = {
           break;
         } else if (
           i == 0 &&
-          (newCheckId.hasClass("playerOne") || newCheckId.hasClass("playerTwo"))
+          (newCheckId.hasClass("playerOne") || newCheckId.hasClass("playerTwo")) // JQuery: hasClass method
         ) {
           game.fightMode();
           break;
