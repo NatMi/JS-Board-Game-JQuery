@@ -53,7 +53,18 @@ class Player {
       currentId[1] = parseInt(currentId[1]);
       return currentId;
     };
+
     this.attack = () => {
+      if (this.cssClass == "playerOne") {
+        $(`#${this.statboxId} .weaponIcon`)
+          .animate({ left: "+=500" }, "slow")
+          .fadeOut(300);
+      } else {
+        $(`#${this.statboxId} .weaponIcon`)
+          .animate({ left: "-=500" }, "slow")
+          .fadeOut(300);
+      }
+
       game.inactivePlayer().healthPoints =
         game.inactivePlayer().healthPoints -
         this.Weapon.damage * game.inactivePlayer().defenceMultiplier;
@@ -116,7 +127,7 @@ let map = {
   },
   windowSize: () => {
     if ($(window).width() < 400) {
-      return 7;
+      return 9;
     } else {
       return 12;
     }
