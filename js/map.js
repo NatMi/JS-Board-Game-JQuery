@@ -57,10 +57,11 @@ class Player {
       game.inactivePlayer().healthPoints =
         game.inactivePlayer().healthPoints -
         this.Weapon.damage * game.inactivePlayer().defenceMultiplier;
-      game.inactivePlayer().defenceMultiplier = 1;
+      game.inactivePlayer().defenceMultiplier = 1; // if opponent chosed to defend themselves, this sets defenceMultiplier back to initial value.
+      // check if battle should continue
       if (game.inactivePlayer().healthPoints > 0) {
-        game.inactivePlayer().createStatbox();
-        game.toggleBtnBox();
+        game.inactivePlayer().createStatbox(); // update statbox for attacked player
+        game.toggleBtnBox(); // active status is toggled along with attack/defend buttons
       } else if (game.inactivePlayer().healthPoints <= 0) {
         game.inactivePlayer().healthPoints = 0;
         game.inactivePlayer().createStatbox();
@@ -69,7 +70,7 @@ class Player {
       }
     };
     this.defend = () => {
-      this.defenceMultiplier = 0.5;
+      this.defenceMultiplier = 0.5; // opponent's attack will be multiplied by it.
       game.toggleBtnBox();
     };
 
@@ -89,7 +90,7 @@ class Player {
 let map = {
   allSquares: () => {
     return $(".mapSquare");
-  }, // JQuery: checking HTML collection od mapSquare class elements
+  }, // JQuery: checking HTML collection od mapSquare class elements. allSquares, firstRow and lastRow are collections for randomPosition method below
 
   firstRow: () => {
     return $("#mapGrid .mapGridRow:first .mapSquare"); //JQuery: selecting element, then inner elements of its first and last child
@@ -101,9 +102,10 @@ let map = {
     let randomIndex = Math.floor(Math.random() * collectionName.length);
     return collectionName[randomIndex]; // new random square
   },
-  generateDimmedSquares: () => {
+  generateDimmedSquares: amount => {
+    // place dimmedSquare (unavailable) class only if randomly generated mapSquare is empty. Repeat until all dimmedSquares are on the map
     let totalDimmed = 0;
-    while (totalDimmed < 15) {
+    while (totalDimmed < amount) {
       let newDimmedSquare = map.randomPosition(map.allSquares());
 
       if (newDimmedSquare.className === "mapSquare") {
@@ -149,7 +151,7 @@ let game = {
     $(".stats-window").css("display", "block"); // sets statbox display to block ("none" before the game starts)
     game.playerOne = new Player("playerOne", "statboxOne");
     game.playerTwo = new Player("playerTwo", "statboxTwo");
-    map.generateDimmedSquares();
+    map.generateDimmedSquares(15);
     game.playerOne.generatePosition(map.firstRow());
     game.playerTwo.generatePosition(map.lastRow());
     game.playerOne.isActive = true;
