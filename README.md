@@ -1,6 +1,7 @@
 # JS-Board-Game-JQuery
 
 OpenClassrooms Project 6. (JavaScript, OOP, DOM, JQuery)
+
 Tasks: Create an online game written JavaScript in which 2 players play each turn to compete.
 
 (repository with earlly version of the game, written with vanilla JS:
