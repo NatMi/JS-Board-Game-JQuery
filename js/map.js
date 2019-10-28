@@ -16,7 +16,7 @@ class Weapons {
         while (isOnMap < 2) {
           let newWeapon = map.randomPosition(map.allSquares());
           if (newWeapon.className === "mapSquare") {
-            newWeapon.classList.add(weapon.cssClass);
+            $(newWeapon).addClass(weapon.cssClass);
             isOnMap++;
           }
         }
@@ -40,7 +40,7 @@ class Player {
       while (isOnMap < 1) {
         let newPlayer = map.randomPosition(mapSquareCollectionName); // generate new random position from selected collection of elements and check if it is available:
         if (newPlayer.className === "mapSquare") {
-          newPlayer.classList.add(this.cssClass);
+          $(newPlayer).addClass(this.cssClass);
           isOnMap++;
         }
         this.position = $(`.${this.cssClass}`)[0]; //jQuery: selecting first element within jQuery wrapper of this.cssClass (i.e. playerOne/ playerTwo) HTML collection.
@@ -100,7 +100,7 @@ let map = {
   },
   randomPosition: collectionName => {
     let randomIndex = Math.floor(Math.random() * collectionName.length);
-    return collectionName[randomIndex]; // new random square
+    return collectionName[randomIndex]; // new random mapSquare element
   },
   generateDimmedSquares: amount => {
     // place dimmedSquare (unavailable) class only if randomly generated mapSquare is empty. Repeat until all dimmedSquares are on the map
@@ -109,7 +109,7 @@ let map = {
       let newDimmedSquare = map.randomPosition(map.allSquares());
 
       if (newDimmedSquare.className === "mapSquare") {
-        newDimmedSquare.classList.add("dimmedSquare");
+        $(newDimmedSquare).addClass("dimmedSquare");
         totalDimmed++;
       }
     }
@@ -297,7 +297,7 @@ let movementManager = {
 };
 
 //////////////////////////   CLICK EVENTS delegation /////////////////////////////////////////
-$("body").on("click", () => {
+$("body").on("click", function() {
   // JQuery: selecting element to which .on() event handling method is attached.
   if ($(event.target).attr("id") == "newGameBtn") {
     game.newGame();
@@ -308,5 +308,4 @@ $("body").on("click", () => {
   } else if ($(event.target).hasClass("defendBtn")) {
     game.activePlayer().defend();
   }
-  console.log("click");
 });
