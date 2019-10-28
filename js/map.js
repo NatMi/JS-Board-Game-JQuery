@@ -88,12 +88,20 @@ class Player {
     this.createStatbox = () => {
       let playerStatbox = $(`#${this.statboxId}`); // jQuery: selecting element with player's statbox id
       playerStatbox.html(""); // jQuery: using html() method to change elements's innerHTML
-      playerStatbox.append($("<p></p>").text(`HEALTH: ${this.healthPoints}`)); // jQuery: appending new p with text content to selected elment
-      playerStatbox.append($("<p></p>").text(`WEAPON: ${this.Weapon.name}`));
+      playerStatbox.append("<table></table>");
+      let playerTable = $(`#${this.statboxId} table`);
+      playerTable.append(
+        $(`<tr><td>HEALTH:</td> <td>${this.healthPoints}</td></tr>`)
+      );
+      playerTable.append(
+        $(`<tr><td>WEAPON:</td> <td>${this.Weapon.name}</td></tr>`)
+      );
+      playerTable.append(
+        $(`<tr><td>DAMAGE:</td> <td>${this.Weapon.damage}</td></tr>`)
+      );
       playerStatbox.append(
         $("<div></div>").addClass(`weaponIcon ${this.Weapon.cssClass}`)
       ); // jQuery: appending new div and adding classes to it
-      playerStatbox.append($("<p></p>").text(`DAMAGE: ${this.Weapon.damage}`));
     };
   }
 }
