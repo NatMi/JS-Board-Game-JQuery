@@ -176,12 +176,12 @@ body {
 
 /*players*/
 .playerOne {
-  background-image: url(../assets/player1.jpg) !important;
+  background-image: url(../assets/player1.png) !important;
   background-size: cover !important;
 }
 
 .playerTwo {
-  background-image: url(../assets/player2.jpg) !important;
+  background-image: url(../assets/player2.png) !important;
   background-size: cover !important;
 }
 
