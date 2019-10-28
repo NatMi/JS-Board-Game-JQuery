@@ -1,9 +1,10 @@
 # JS-Board-Game-JQuery
 
 OpenClassrooms Project 6. (JavaScript, OOP, DOM, JQuery)
+Tasks: Create an online game written JavaScript in which 2 players play each turn to compete.
+
 (repository with earlly version of the game, written with vanilla JS:
 https://github.com/NatMi/JS-Board-Game )
-Tasks: Create an online game written JavaScript in which 2 players play each turn to compete.
 
 1. Randomly geerate game map, which consists of empty and dimmed squares.
 2. Invent 4 types of weapons, each with different damage inflicted, place them randomly on the map.
