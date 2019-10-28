@@ -131,10 +131,16 @@ let map = {
 let game = {
   playerOne: "",
   playerTwo: "",
-
+  mapgrid: $("#mapGrid"),
+  weapons: new Weapons([
+    { name: "Snowball", cssClass: "snowball", damage: 10 },
+    { name: "Fish", cssClass: "fish", damage: 15 },
+    { name: "Small stone", cssClass: "smallStone", damage: 20 },
+    { name: "Big stone", cssClass: "bigStone", damage: 30 }
+  ]),
   newGame: () => {
-    $("#mapGrid").fadeOut(10);
-    $("#mapGrid")
+    game.mapgrid.fadeOut(10);
+    game.mapgrid
       .html("")
       .removeClass("disabled")
       .fadeIn(900); // JQuery: using fadeIn() and fadeOut() effects, clearing mapGrid and removing pointer events blockade from previous game
@@ -153,7 +159,7 @@ let game = {
     game.playerTwo.createStatbox();
   },
   fightMode: () => {
-    $("#mapGrid").addClass("disabled");
+    game.mapgrid.addClass("disabled");
     game.btnBox().style.display = "block";
     movementManager.clearAccessible();
   },
