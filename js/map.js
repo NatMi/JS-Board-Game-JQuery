@@ -189,10 +189,6 @@ let game = {
       game.playerOne.isActive = true;
     }
   },
-  availableSquares: () => {
-    return $(".availableSquare");
-  },
-
   btnBox: () => {
     let btn = "";
     if (game.activePlayer() == game.playerOne) {
@@ -211,6 +207,9 @@ let game = {
 
 ///////////////////////// MOVEMENT ///////////////////////////
 let movementManager = {
+  availableSquares: () => {
+    return $(".availableSquare");
+  },
   checkAvailableSquares: player => {
     function check(player, index, multiplier) {
       let x = player.positionArray()[0]; // index 0 in positionArray is a row number extracted from mapSquare's id of where active player is currently placed
@@ -263,10 +262,10 @@ let movementManager = {
     $(`#${player.position.id}`).removeClass(`${player.cssClass}`);
   },
   clearAccessible: () => {
-    while (game.availableSquares().length) {
-      game
+    while (movementManager.availableSquares().length) {
+      movementManager
         .availableSquares()
-        [game.availableSquares().length - 1].classList.remove(
+        [movementManager.availableSquares().length - 1].classList.remove(
           "availableSquare"
         );
     }
