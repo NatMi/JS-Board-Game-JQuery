@@ -141,11 +141,11 @@ let game = {
     { name: "Big stone", cssClass: "bigStone", damage: 30 }
   ]),
   newGame: () => {
-    game.mapgrid.fadeOut(10);
+    game.mapgrid.fadeOut(5);
     game.mapgrid
       .html("")
       .removeClass("disabled")
-      .fadeIn(900); // JQuery: using fadeIn() and fadeOut() effects, clearing mapGrid and removing pointer events blockade from previous game
+      .fadeIn(300); // JQuery: using fadeIn() and fadeOut() effects, clearing mapGrid and removing pointer events blockade from previous game
     $(".btnBox").css("display", "none"); //hides fightMode button elements
     map.drawMapGrid(12);
     $(".stats-window").css("display", "block"); // sets statbox display to block ("none" before the game starts)
@@ -213,40 +213,47 @@ let game = {
 let movementManager = {
   checkAvailableSquares: player => {
     function check(player, index, multiplier) {
-      let x = player.positionArray()[0];
-      let y = player.positionArray()[1];
+      let x = player.positionArray()[0]; // index 0 in positionArray is a row number extracted from mapSquare's id of where active player is currently placed
+      let y = player.positionArray()[1]; // index 1 is a column number
 
       for (let i = 0; i < 3; i++) {
+        // 1. index calculates which direction (row or column) is browsed for available squares
         if (index === 1) {
-          y = player.positionArray()[index] + (i + 1) * multiplier;
+          y = player.positionArray()[index] + (i + 1) * multiplier; // 2. multiplied by 1 or -1 calculates squares behind or in fron of player's current position
         } else if (index === 0) {
           x = player.positionArray()[index] + (i + 1) * multiplier;
         }
 
-        let newCheck = `${x}-${y}`;
-        let newCheckId = $(`#${newCheck}`);
+        let newCheck = `${x}-${y}`; // 3. creates mapSquare id with calculated coordinates
+        let newCheckId = $(`#${newCheck}`); // 4. creates jQuery object of calculated mapSquare
 
+        // 5. if it calculated mapSquare doesn't exist (border), loop breaks:
         if (newCheckId == null) {
           break;
-        } else if (
+        }
+        // 6. if first checked mapSquare contains player's css class, battle begins:
+        else if (
           i == 0 &&
-          (newCheckId.hasClass("playerOne") || newCheckId.hasClass("playerTwo")) // JQuery: hasClass method
+          (newCheckId.hasClass("playerOne") || newCheckId.hasClass("playerTwo")) // (JQuery: hasClass method)
         ) {
           game.fightMode();
           break;
-        } else if (
+        } // 7. if another player is further, but still within 3 squares distance, available squares are not added on and beyond it (active player can't jump over the opponent)
+        else if (
           newCheckId.hasClass("playerOne") ||
           newCheckId.hasClass("playerTwo")
         ) {
           break;
+          // 8. loop breaks if checked square has dimmedSquare class:
         } else if (newCheckId.hasClass("dimmedSquare")) {
           break;
-        } else {
+        } // 9. if no obstacles, code loops three times:
+        else {
           newCheckId.addClass("availableSquare");
         }
       }
     }
-
+    // 10:  execute function above in four directions:
     check(player, 0, -1); //up
     check(player, 0, 1); //down
     check(player, 1, -1); //left
