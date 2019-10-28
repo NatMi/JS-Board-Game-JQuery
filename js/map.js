@@ -114,6 +114,13 @@ let map = {
       }
     }
   },
+  windowSize: () => {
+    if ($(window).width() < 400) {
+      return 7;
+    } else {
+      return 12;
+    }
+  },
   drawMapGrid: size => {
     for (let row = 0; row < size; row++) {
       $("#mapGrid").append($("<div></div").addClass("mapGridRow"));
@@ -147,7 +154,7 @@ let game = {
       .removeClass("disabled")
       .fadeIn(300); // JQuery: using fadeIn() and fadeOut() effects, clearing mapGrid and removing pointer events blockade from previous game
     $(".btnBox").css("display", "none"); //hides fightMode button elements
-    map.drawMapGrid(12);
+    map.drawMapGrid(map.windowSize());
     $(".stats-window").css("display", "block"); // sets statbox display to block ("none" before the game starts)
     game.playerOne = new Player("playerOne", "statboxOne");
     game.playerTwo = new Player("playerTwo", "statboxTwo");
