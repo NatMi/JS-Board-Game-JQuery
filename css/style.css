@@ -77,6 +77,8 @@ body {
 }
 
 #main-container {
+  font-family: "Arimo", sans-serif;
+  color: #5e8cb3;
   position: relative;
   min-height: 50vh;
   display: flex;
@@ -106,7 +108,8 @@ body {
 }
 #main-header a {
   text-decoration: none;
-  font-size: 10px;
+  font-family: "Arimo", sans-serif;
+  font-size: 15px;
   color: #7a0000;
   transition: all 0.2s;
 }
