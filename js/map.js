@@ -58,11 +58,15 @@ class Player {
       if (this.cssClass == "playerOne") {
         $(`#${this.statboxId} .weaponIcon`)
           .animate({ left: "+=500" }, "slow")
-          .fadeOut(300);
+          .fadeOut(300)
+          .animate({ left: "-=500" })
+          .fadeIn(200);
       } else {
         $(`#${this.statboxId} .weaponIcon`)
           .animate({ left: "-=500" }, "slow")
-          .fadeOut(300);
+          .fadeOut(300)
+          .animate({ left: "+=500" })
+          .fadeIn(200);
       }
 
       game.inactivePlayer().healthPoints =
