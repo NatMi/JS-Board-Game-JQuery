@@ -1,19 +1,36 @@
+//////////////////////////   CLICK EVENTS delegation /////////////////////////////////////////
+$("body").on("click", function() {
+  // JQuery: selecting element to which .on() event handling method is attached.
+  if ($(event.target).attr("id") == "newGameBtn") {
+    game.newGame();
+  } else if ($(event.target).hasClass("availableSquare")) {
+    movementManager.movePlayer(game.activePlayer());
+  } else if ($(event.target).hasClass("attackBtn")) {
+    game.activePlayer().attack();
+  } else if ($(event.target).hasClass("defendBtn")) {
+    game.activePlayer().defend();
+  }
+});
+
 //////////////////////   WEAPONS   ///////////////
 class Weapons {
   constructor(allItems) {
-    this.allItems = allItems;
+    this.allItems = allItems; // array with weapon objects will be initialised in game object. Properties of each object: name, cssClass, damage.
+    // collection of weapons to be generated on map when new game starts:
     this.pickable = () => {
       return this.allItems.filter(item => {
         return item.damage > 10;
       });
     };
+    // choosing which weapon should be set as default:
     this.default = () => {
       return this.allItems[0];
     };
+    // populate map randomly with pickable weapons:
     this.generateOnMap = () => {
       for (let weapon of this.pickable()) {
         let isOnMap = 0;
-        while (isOnMap < 2) {
+        while (isOnMap < 1) {
           let newWeapon = map.randomPosition(map.allSquares());
           if (newWeapon.className === "mapSquare") {
             $(newWeapon).addClass(weapon.cssClass);
@@ -58,13 +75,13 @@ class Player {
       if (this.cssClass == "playerOne") {
         $(`#${this.statboxId} .weaponIcon`)
           .animate({ left: "+=500" }, "slow")
-          .fadeOut(300)
+          .fadeOut(100)
           .animate({ left: "-=500" })
           .fadeIn(200);
       } else {
         $(`#${this.statboxId} .weaponIcon`)
           .animate({ left: "-=500" }, "slow")
-          .fadeOut(300)
+          .fadeOut(100)
           .animate({ left: "+=500" })
           .fadeIn(200);
       }
@@ -159,6 +176,7 @@ let map = {
     }
   }
 };
+///////////////////////////// GAME //////////////////////////////////////////
 
 let game = {
   playerOne: "",
@@ -177,6 +195,7 @@ let game = {
       .removeClass("disabled")
       .fadeIn(300); // JQuery: using fadeIn() and fadeOut() effects, clearing mapGrid and removing pointer events blockade from previous game
     $(".btnBox").css("display", "none"); //hides fightMode button elements
+
     map.drawMapGrid(map.windowSize());
     $(".stats-window").css("display", "block"); // sets statbox display to block ("none" before the game starts)
     game.playerOne = new Player("playerOne", "statboxOne");
@@ -325,17 +344,3 @@ let movementManager = {
     movementManager.checkAvailableSquares(game.activePlayer());
   }
 };
-
-//////////////////////////   CLICK EVENTS delegation /////////////////////////////////////////
-$("body").on("click", function() {
-  // JQuery: selecting element to which .on() event handling method is attached.
-  if ($(event.target).attr("id") == "newGameBtn") {
-    game.newGame();
-  } else if ($(event.target).hasClass("availableSquare")) {
-    movementManager.movePlayer(game.activePlayer());
-  } else if ($(event.target).hasClass("attackBtn")) {
-    game.activePlayer().attack();
-  } else if ($(event.target).hasClass("defendBtn")) {
-    game.activePlayer().defend();
-  }
-});
